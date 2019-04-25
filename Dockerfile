@@ -11,10 +11,6 @@ ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
-# Add needed patches and scripts
-ADD unifi-video.patch /unifi-video.patch
-ADD run.sh /run.sh
-
 # Add mongodb repo, key, update and install needed packages
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4 && \
   echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" > /etc/apt/sources.list.d/mongodb-org-4.0.list && \
@@ -33,6 +29,10 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75
     mongodb-org-shell \
     moreutils \
     wget
+
+# Add needed patches and scripts
+ADD unifi-video.patch /unifi-video.patch
+ADD run.sh /run.sh
 
 # Get, install and patch unifi-video
 RUN wget -q -O unifi-video.deb https://dl.ubnt.com/firmwares/ufv/v${version}/unifi-video.Ubuntu18.04_amd64.v${version}.deb && \
